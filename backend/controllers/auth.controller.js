@@ -2,7 +2,7 @@ import User from "../models/user.model.js";
 
 export const signupUser = async (req, res) => {
   try {
-    const { fullName, username, password, confirmPassword, gender } = req.body;
+    const { fullName, username, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({
@@ -26,9 +26,10 @@ export const signupUser = async (req, res) => {
       fullName,
       username,
       password,
-      gender,
       profilePicture,
     });
+
+    await newUser.save();
 
     res.status(201).json({
       success: true,
