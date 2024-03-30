@@ -1,7 +1,51 @@
+import User from "../models/user.model.js";
+
 export const signupUser = async (req, res) => {
   try {
-    const { fullName, email, password, confirmPassword, gender } = req.body;
-  } catch (error) {}
+    const { fullName, username, password, confirmPassword, gender } = req.body;
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Passwords do not match",
+      });
+    }
+
+    const user = await User.findOne({ username });
+
+    if (user) {
+      return res.status(400).json({
+        success: false,
+        message: "Username already exists",
+      });
+    }
+
+    const profilePicture = `https://api.dicebear.com/8.x/adventurer/svg?seed=${username}`;
+
+    const newUser = new User({
+      fullName,
+      username,
+      password,
+      gender,
+      profilePicture,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "User created successfully",
+      data: {
+        _id: newUser._id,
+        fullName: newUser.fullName,
+        username: newUser.username,
+        profilePicture: newUser.profilePicture,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
 export const loginUser = async (req, res) => {
