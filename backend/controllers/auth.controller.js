@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 import generateTokenAndSetCookie from "../utils/generate-token.js";
 
-export const signupUser = async (req, res) => {
+export const signup = async (req, res) => {
   try {
     const { fullName, username, password, confirmPassword } = req.body;
 
@@ -61,10 +61,49 @@ export const signupUser = async (req, res) => {
   }
 };
 
-export const loginUser = async (req, res) => {
-  console.log(req.body);
+export const login = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    const passwordMatch = await bcrypt.compare(password, user?.password || "");
+
+    if (!user || !passwordMatch) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid username or password",
+      });
+    }
+
+    generateTokenAndSetCookie(user._id, res);
+    res.status(200).json({
+      success: true,
+      message: "User logged in successfully",
+      data: {
+        _id: user._id,
+        fullName: user.fullName,
+        username: user.username,
+        profilePicture: user.profilePicture,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
-export const logoutUser = async (req, res) => {
-  console.log(req.body);
+export const logout = (req, res) => {
+  try {
+    res.clearCookie("jwt");
+    res.status(200).json({
+      success: true,
+      message: "User logged out successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
