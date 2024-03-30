@@ -1,4 +1,6 @@
+import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
+import generateTokenAndSetCookie from "../utils/generate-token.js";
 
 export const signupUser = async (req, res) => {
   try {
@@ -20,27 +22,37 @@ export const signupUser = async (req, res) => {
       });
     }
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const profilePicture = `https://api.dicebear.com/8.x/adventurer/svg?seed=${username}`;
 
     const newUser = new User({
       fullName,
       username,
-      password,
+      password: hashedPassword,
       profilePicture,
     });
 
-    await newUser.save();
-
-    res.status(201).json({
-      success: true,
-      message: "User created successfully",
-      data: {
-        _id: newUser._id,
-        fullName: newUser.fullName,
-        username: newUser.username,
-        profilePicture: newUser.profilePicture,
-      },
-    });
+    if (newUser) {
+      generateTokenAndSetCookie(newUser._id, res);
+      await newUser.save();
+      res.status(201).json({
+        success: true,
+        message: "User created successfully",
+        data: {
+          _id: newUser._id,
+          fullName: newUser.fullName,
+          username: newUser.username,
+          profilePicture: newUser.profilePicture,
+        },
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "User not created",
+      });
+    }
   } catch (error) {
     res.status(500).json({
       success: false,
