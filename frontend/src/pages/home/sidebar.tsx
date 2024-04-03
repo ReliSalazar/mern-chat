@@ -15,7 +15,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
   return (
     <div className="pt-2 px-4 flex flex-col divide-y divide-neutral gap-2">
       <SearchInput value={value} onChange={setValue} onEnter={handleSearch} />
-      <div className="flex-1 pt-2 flex flex-col gap-2">
+      <div className="flex-1 overflow-y-auto pt-2 flex flex-col gap-2">
         <button className="btn btn-outline btn-primary w-full h-14 justify-start">
           <User
             fullName="John Doe"
@@ -29,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
           />
         </button>
       </div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-2">
         <button className="btn w-full">
           <LogoutIcon className="w-4 h-4" />
           <span>logout</span>
