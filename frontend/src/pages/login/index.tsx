@@ -1,6 +1,6 @@
 import React from "react";
-import UserIcon from "../../icons/user";
 import KeyIcon from "../../icons/key";
+import AtIcon from "../../icons/at";
 
 interface LoginProps {}
 
@@ -14,12 +14,12 @@ const Login: React.FC<LoginProps> = () => {
 
           <div className="form-control gap-2">
             <label className="input input-bordered flex items-center gap-2">
-              <UserIcon className="w-4 h-4 opacity-70" />
+              <AtIcon className="w-4 h-4 opacity-70" />
               <input type="text" className="grow" placeholder="Username" />
             </label>
             <label className="input input-bordered flex items-center gap-2">
               <KeyIcon className="w-4 h-4 opacity-70" />
-              <input type="password" className="grow" value="password" />
+              <input type="password" className="grow" placeholder="Password" />
             </label>
           </div>
 
@@ -27,6 +27,9 @@ const Login: React.FC<LoginProps> = () => {
             <button type="submit" className="btn btn-primary">
               Login
             </button>
+            <a href="/signup">
+              <button className="btn btn-secondary">Sign Up</button>
+            </a>
           </div>
         </div>
       </form>
