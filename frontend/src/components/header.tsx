@@ -21,9 +21,7 @@ const Header: React.FC<HeaderProps> = () => {
           <option value="">Default</option>
           <option value="light">Light</option>
           <option value="cupcake">Cupcake</option>
-          <option value="emerald">Emerald</option>
           <option value="dark">Dark</option>
-          <option value="sunset">Sunset</option>
           <option value="dracula">Dracula</option>
         </select>
       </div>
