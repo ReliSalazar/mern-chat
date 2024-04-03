@@ -32,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
       <div className="flex items-center py-2">
         <button className="btn w-full">
           <LogoutIcon className="w-4 h-4" />
-          <span>logout</span>
+          <span className="mb-1">logout</span>
         </button>
       </div>
     </div>
