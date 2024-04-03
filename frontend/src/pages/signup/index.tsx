@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import UserIcon from "../../icons/user";
 import KeyIcon from "../../icons/key";
 import AtIcon from "../../icons/at";
@@ -28,14 +29,22 @@ const SignUp: React.FC<SignUpProps> = () => {
             </label>
             <label className="input input-bordered flex items-center gap-2">
               <KeyIcon className="w-4 h-4 opacity-70" />
-              <input type="password" className="grow" placeholder="Confirm Password" />
+              <input
+                type="password"
+                className="grow"
+                placeholder="Confirm Password"
+              />
             </label>
           </div>
 
-          <div className="card-actions items-center justify-center">
+          <div className="card-actions items-center justify-center flex-col">
             <button type="submit" className="btn btn-primary">
               Sign Up
             </button>
+
+            <Link to="/login" className="link link-primary text-xs text-center">
+              Already have an account? Log In 🔑
+            </Link>
           </div>
         </div>
       </form>

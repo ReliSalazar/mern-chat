@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {}
 
@@ -6,7 +7,7 @@ const Header: React.FC<HeaderProps> = () => {
   return (
     <div className="navbar bg-base-300">
       <div className="navbar-start">
-        <a className="btn btn-ghost text-xl">MERN Chat</a>
+        <Link to="/" className="btn btn-ghost text-xl">MERN Chat</Link>
       </div>
 
       <div className="navbar-end">

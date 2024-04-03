@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import SearchInput from "../../components/search-input";
 import LogoutIcon from "../../icons/logout";
 import User from "../../components/user";
@@ -30,10 +31,12 @@ const Sidebar: React.FC<SidebarProps> = () => {
         </button>
       </div>
       <div className="flex items-center py-2">
-        <button className="btn w-full">
-          <LogoutIcon className="w-4 h-4" />
-          <span className="mb-1">logout</span>
-        </button>
+        <Link to="/login" className="w-full">
+          <button className="btn w-full">
+            <LogoutIcon className="w-4 h-4" />
+            <span className="mb-1">logout</span>
+          </button>
+        </Link>
       </div>
     </div>
   );

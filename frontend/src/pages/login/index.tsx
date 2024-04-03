@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import KeyIcon from "../../icons/key";
 import AtIcon from "../../icons/at";
 
@@ -23,13 +24,14 @@ const Login: React.FC<LoginProps> = () => {
             </label>
           </div>
 
-          <div className="card-actions items-center justify-center">
+          <div className="card-actions items-center justify-center flex-col">
             <button type="submit" className="btn btn-primary">
-              Login
+              Log In
             </button>
-            <a href="/signup">
-              <button className="btn btn-secondary">Sign Up</button>
-            </a>
+
+            <Link to="/signup" className="link link-primary text-xs text-center">
+              Ready to join us? Sign up now 🎉
+            </Link>
           </div>
         </div>
       </form>
