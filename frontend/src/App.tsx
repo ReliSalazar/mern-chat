@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { themeChange } from "theme-change";
 import "./App.css";
 import Header from "./components/header";
+import Login from "./views/login";
 
 function App() {
   useEffect(() => {
@@ -9,9 +10,9 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col h-screen">
       <Header />
-      <h1 className="text-3xl font-bold underline">Title</h1>
+      <Login />
     </div>
   );
 }
