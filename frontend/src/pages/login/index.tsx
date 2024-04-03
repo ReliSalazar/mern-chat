@@ -6,7 +6,7 @@ interface LoginProps {}
 
 const Login: React.FC<LoginProps> = () => {
   return (
-    <div className="flex-1 flex items-center justify-center">
+    <section className="flex-1 flex items-center justify-center">
       <form action="" className="card w-96 bg-base-300 shadow-xl">
         <div className="card-body gap-4">
           <h2 className="card-title">Login</h2>
@@ -33,7 +33,7 @@ const Login: React.FC<LoginProps> = () => {
           </div>
         </div>
       </form>
-    </div>
+    </section>
   );
 };
 
