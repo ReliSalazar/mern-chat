@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { themeChange } from "theme-change";
 import "./App.css";
 import Header from "./components/header";
-import Login from "./views/login";
+import Login from "./pages/login";
 
 function App() {
   useEffect(() => {
