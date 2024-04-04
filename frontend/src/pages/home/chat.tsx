@@ -42,7 +42,7 @@ const Chat: React.FC<ChatProps> = () => {
   }
 
   return (
-    <section className="pt-2 px-4 md:min-w-[450px] flex flex-col divide-y divide-neutral gap-2">
+    <section className="flex-1 pt-2 px-4 md:min-w-[450px] flex flex-col divide-y divide-neutral gap-2">
       <header>
         <h2 className="card-title">
           <User
