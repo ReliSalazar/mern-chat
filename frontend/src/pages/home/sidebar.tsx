@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import SearchInput from "../../components/search-input";
 import LogoutIcon from "../../icons/logout";
 import User from "../../components/user";
+import useLogOut from "../../hooks/use-log-out";
 
 interface SidebarProps {}
 
 const Sidebar: React.FC<SidebarProps> = () => {
   const [value, setValue] = useState<string>("");
+  const { loading, logOut } = useLogOut();
 
   const handleSearch = () => {
     console.log(value);
@@ -30,8 +32,8 @@ const Sidebar: React.FC<SidebarProps> = () => {
         </button>
       </div>
       <div className="flex items-center py-2">
-        <button className="btn w-full">
-          <LogoutIcon className="w-4 h-4" />
+        <button onClick={logOut} disabled={loading} className="btn w-full">
+          {loading ? <span className="loading loading-spinner w-4 h-4" /> : <LogoutIcon className="w-4 h-4" />}
           <span className="mb-1">logout</span>
         </button>
       </div>

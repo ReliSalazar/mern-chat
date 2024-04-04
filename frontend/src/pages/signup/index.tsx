@@ -15,7 +15,7 @@ interface UserData {
 }
 
 const SignUp: React.FC<SignUpProps> = () => {
-  const { signUp } = useSignUp();
+  const { loading, signUp } = useSignUp();
   const [userData, setUserData] = React.useState<UserData>({
     fullName: "",
     username: "",
@@ -87,7 +87,12 @@ const SignUp: React.FC<SignUpProps> = () => {
           </div>
 
           <div className="card-actions items-center justify-center flex-col">
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-primary"
+            >
+              {loading && <span className="loading loading-spinner w-4 h-4" />}
               Sign Up
             </button>
 
