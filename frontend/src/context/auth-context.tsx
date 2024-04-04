@@ -2,6 +2,9 @@ import { createContext, useContext, useState } from "react";
 
 interface AuthUser {
   _id: string;
+  fullName: string;
+  username: string;
+  profilePicture: string;
 }
 
 interface AuthContextType {

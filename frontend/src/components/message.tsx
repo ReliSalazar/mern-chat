@@ -1,26 +1,45 @@
 import React from "react";
+import { useAuthContext } from "../context/auth-context";
+import useConversation from "../store/use-conversation";
 
-interface MessageProps {
-  sender: boolean;
+interface MessageType {
+  _id: string;
+  senderId: string;
+  receiverId: string;
+  message: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-const Message: React.FC<MessageProps> = ({ sender }) => {
+interface MessageProps {
+  message: MessageType;
+}
+
+const Message: React.FC<MessageProps> = ({ message }) => {
+  const { authUser } = useAuthContext();
+  const { selectedConversation } = useConversation();
+  const isSender = message.senderId === authUser?._id;
+
   return (
-    <div className={`chat ${sender ? "chat-end" : "chat-start"}`}>
+    <div className={`chat ${isSender ? "chat-end" : "chat-start"}`}>
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
           <img
             alt=""
-            src="https://api.dicebear.com/8.x/adventurer/svg?seed=john"
+            src={
+              isSender
+                ? authUser?.profilePicture
+                : selectedConversation?.profilePicture
+            }
           />
         </div>
       </div>
       <div
         className={`chat-bubble ${
-          sender ? "chat-bubble-primary" : "chat-bubble-neutral"
+          isSender ? "chat-bubble-primary" : "chat-bubble-neutral"
         }`}
       >
-        It was said that you would, destroy the Sith, not join them.
+        {message.message}
       </div>
     </div>
   );

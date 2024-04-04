@@ -5,6 +5,7 @@ import ComposeMessage from "../../components/compose-message";
 import Welcome from "./welcome";
 import useConversation from "../../store/use-conversation";
 import useSendMessage from "../../hooks/use-send-message";
+import useGetMessages from "../../hooks/use-get-messages";
 
 interface ChatProps {}
 
@@ -12,6 +13,7 @@ const Chat: React.FC<ChatProps> = () => {
   const [newMessage, setNewMessage] = useState<string>("");
   const { selectedConversation, setSelectedConversation } = useConversation();
   const { loading, sendMessage } = useSendMessage();
+  const { loading: messageLoading, messages } = useGetMessages();
 
   useEffect(() => {
     return () => {
@@ -40,9 +42,17 @@ const Chat: React.FC<ChatProps> = () => {
         </h2>
       </header>
       <div className="flex-1 overflow-y-auto">
-        <Message sender={false} />
-        <Message sender={true} />
-        <Message sender={false} />
+        {messages.length === 0 && (
+          <p className="text-center">Send a message to start a conversation</p>
+        )}
+
+        {messageLoading ? (
+          <span className="loading loading-spinner w-4 h-4" />
+        ) : (
+          messages.map((message) => (
+            <Message key={message._id} message={message} />
+          ))
+        )}
       </div>
       <div className="py-2">
         <ComposeMessage

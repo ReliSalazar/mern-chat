@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { trim } from "../utils";
 import { useAuthContext } from "../context/auth-context";
 
 interface UserData {
@@ -35,10 +34,10 @@ const useSignUp = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullName: trim(fullName),
-          username: trim(username),
-          password: trim(password),
-          confirmPassword: trim(confirmPassword),
+          fullName: fullName.trim(),
+          username: username.trim(),
+          password: password.trim(),
+          confirmPassword: confirmPassword.trim(),
         }),
       });
 
@@ -72,20 +71,20 @@ function handleInputErrors(
   password: string,
   confirmPassword: string
 ) {
-  const emptyFullName = trim(fullName) === "";
-  const emptyUsername = trim(username) === "";
-  const emptyPassword = trim(password) === "";
+  const emptyFullName = fullName.trim() === "";
+  const emptyUsername = username.trim() === "";
+  const emptyPassword = password.trim() === "";
   if (emptyFullName || emptyUsername || emptyPassword) {
     toast.error("Please fill in all fields");
     return false;
   }
 
-  if (trim(password) !== trim(confirmPassword)) {
+  if (password.trim() !== confirmPassword.trim()) {
     toast.error("Passwords do not match");
     return false;
   }
 
-  if (trim(password).length < 6) {
+  if (password.trim().length < 6) {
     toast.error("Password must be at least 6 characters long");
     return false;
   }
