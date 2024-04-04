@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import User from "../../components/user";
 import Message from "../../components/message";
 import ComposeMessage from "../../components/compose-message";
 import { trim } from "../../utils";
 import Welcome from "./welcome";
+import useConversation from "../../store/use-conversation";
 
 interface ChatProps {}
 
 const Chat: React.FC<ChatProps> = () => {
   const [newMessage, setNewMessage] = useState<string>("");
+  const { selectedConversation, setSelectedConversation } = useConversation();
 
-  const noChat = true;
+  useEffect(() => {
+    return () => {
+      setSelectedConversation(null);
+    };
+  }, [setSelectedConversation]);
 
   const handleSendMessage = () => {
     if (trim(newMessage) === "") return;
@@ -18,7 +24,7 @@ const Chat: React.FC<ChatProps> = () => {
     setNewMessage("");
   };
 
-  if (noChat) {
+  if (!selectedConversation) {
     return <Welcome />;
   }
 
@@ -27,8 +33,8 @@ const Chat: React.FC<ChatProps> = () => {
       <header>
         <h2 className="card-title">
           <User
-            fullName="John Doe"
-            profilePicture="https://api.dicebear.com/8.x/adventurer/svg?seed=john"
+            fullName={selectedConversation.fullName}
+            profilePicture={selectedConversation.profilePicture}
           />
         </h2>
       </header>
