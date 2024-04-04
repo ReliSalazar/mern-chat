@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { trim } from "../utils";
 import { useAuthContext } from "../context/auth-context";
 
 interface logInData {
@@ -28,8 +27,8 @@ const useLogIn = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: trim(username),
-          password: trim(password),
+          username: username.trim(),
+          password: password.trim(),
         }),
       });
 
@@ -55,8 +54,8 @@ const useLogIn = () => {
 };
 
 const handleInputErrors = (username: string, password: string) => {
-  const emptyUsername = trim(username) === "";
-  const emptyPassword = trim(password) === "";
+  const emptyUsername = username.trim() === "";
+  const emptyPassword = password.trim() === "";
 
   if (emptyUsername || emptyPassword) {
     toast.error("Please fill in all fields");

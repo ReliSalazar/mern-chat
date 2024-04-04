@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import User from "../../components/user";
 import Message from "../../components/message";
 import ComposeMessage from "../../components/compose-message";
-import { trim } from "../../utils";
 import Welcome from "./welcome";
 import useConversation from "../../store/use-conversation";
+import useSendMessage from "../../hooks/use-send-message";
 
 interface ChatProps {}
 
 const Chat: React.FC<ChatProps> = () => {
   const [newMessage, setNewMessage] = useState<string>("");
   const { selectedConversation, setSelectedConversation } = useConversation();
+  const { loading, sendMessage } = useSendMessage();
 
   useEffect(() => {
     return () => {
@@ -19,8 +20,8 @@ const Chat: React.FC<ChatProps> = () => {
   }, [setSelectedConversation]);
 
   const handleSendMessage = () => {
-    if (trim(newMessage) === "") return;
-    console.log(newMessage);
+    if (newMessage.trim() === "") return;
+    sendMessage(newMessage);
     setNewMessage("");
   };
 
@@ -48,6 +49,7 @@ const Chat: React.FC<ChatProps> = () => {
           value={newMessage}
           onChange={setNewMessage}
           onEnter={handleSendMessage}
+          loading={loading}
         />
       </div>
     </section>

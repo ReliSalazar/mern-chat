@@ -5,6 +5,7 @@ interface ComposeMessageProps {
   value: string;
   onChange: (value: string) => void;
   onEnter: () => void;
+  loading?: boolean;
   placeholder?: string;
 }
 
@@ -12,6 +13,7 @@ const ComposeMessage: React.FC<ComposeMessageProps> = ({
   value,
   onChange,
   onEnter,
+  loading = false,
   placeholder = "Message",
 }) => {
   return (
@@ -21,11 +23,16 @@ const ComposeMessage: React.FC<ComposeMessageProps> = ({
         className="grow"
         placeholder={placeholder}
         value={value}
+        disabled={loading}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && onEnter()}
         autoFocus
       />
-      <SendIcon className="w-4 h-4 opacity-70" />
+      {loading ? (
+        <span className="loading loading-spinner w-4 h-4" />
+      ) : (
+        <SendIcon className="w-4 h-4 opacity-70" />
+      )}
     </label>
   );
 };
