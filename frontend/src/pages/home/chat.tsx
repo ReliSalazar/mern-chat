@@ -6,6 +6,7 @@ import Welcome from "./welcome";
 import useConversation from "../../store/use-conversation";
 import useSendMessage from "../../hooks/use-send-message";
 import useGetMessages from "../../hooks/use-get-messages";
+import MessageSkeleton from "../../components/skeletons/message-skeleton";
 
 interface ChatProps {}
 
@@ -14,6 +15,15 @@ const Chat: React.FC<ChatProps> = () => {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const { loading, sendMessage } = useSendMessage();
   const { loading: messageLoading, messages } = useGetMessages();
+  const lastMessageRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (lastMessageRef.current) {
+        lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
+  }, [messages]);
 
   useEffect(() => {
     return () => {
@@ -47,10 +57,10 @@ const Chat: React.FC<ChatProps> = () => {
         )}
 
         {messageLoading ? (
-          <span className="loading loading-spinner w-4 h-4" />
+          <MessageSkeleton />
         ) : (
           messages.map((message) => (
-            <Message key={message._id} message={message} />
+            <Message key={message._id} message={message} ref={lastMessageRef} />
           ))
         )}
       </div>
