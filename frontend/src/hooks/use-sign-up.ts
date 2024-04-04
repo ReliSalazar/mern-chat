@@ -80,12 +80,12 @@ function handleInputErrors(
     return false;
   }
 
-  if (password !== confirmPassword) {
+  if (trim(password) !== trim(confirmPassword)) {
     toast.error("Passwords do not match");
     return false;
   }
 
-  if (password.length < 6) {
+  if (trim(password).length < 6) {
     toast.error("Password must be at least 6 characters long");
     return false;
   }
