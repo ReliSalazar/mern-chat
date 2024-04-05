@@ -9,11 +9,11 @@ interface MessageType {
   message: string;
   createdAt: string;
   updatedAt: string;
+  shouldShake?: boolean;
 }
 
 interface MessageProps {
   message: MessageType;
-  ref: React.RefObject<HTMLDivElement>;
 }
 
 const extractTime = (date: string) => {
@@ -26,13 +26,13 @@ const extractTime = (date: string) => {
   return `${formattedHours}:${formattedMinutes} ${ampm}`;
 };
 
-const Message: React.FC<MessageProps> = ({ message, ref }) => {
+const Message: React.FC<MessageProps> = ({ message}) => {
   const { authUser } = useAuthContext();
   const { selectedConversation } = useConversation();
   const isSender = message.senderId === authUser?._id;
 
   return (
-    <div ref={ref} className={`chat ${isSender ? "chat-end" : "chat-start"}`}>
+    <div className={`chat ${isSender ? "chat-end" : "chat-start"}`}>
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
           <img
@@ -48,7 +48,7 @@ const Message: React.FC<MessageProps> = ({ message, ref }) => {
       <div
         className={`chat-bubble ${
           isSender ? "chat-bubble-primary" : "chat-bubble-neutral"
-        }`}
+        } ${message?.shouldShake ? "shake" : ""}`}
       >
         {message.message}
       </div>

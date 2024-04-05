@@ -7,6 +7,7 @@ import useConversation from "../../store/use-conversation";
 import useSendMessage from "../../hooks/use-send-message";
 import useGetMessages from "../../hooks/use-get-messages";
 import MessageSkeleton from "../../components/skeletons/message-skeleton";
+import useListenMessages from "../../hooks/use-listen-messages";
 
 interface ChatProps {}
 
@@ -16,6 +17,7 @@ const Chat: React.FC<ChatProps> = () => {
   const { loading, sendMessage } = useSendMessage();
   const { loading: messageLoading, messages } = useGetMessages();
   const lastMessageRef = React.useRef<HTMLDivElement>(null);
+  useListenMessages();
 
   useEffect(() => {
     setTimeout(() => {
@@ -60,7 +62,9 @@ const Chat: React.FC<ChatProps> = () => {
           <MessageSkeleton />
         ) : (
           messages.map((message) => (
-            <Message key={message._id} message={message} ref={lastMessageRef} />
+            <div key={message._id} ref={lastMessageRef}>
+              <Message message={message} />
+            </div>
           ))
         )}
       </div>
