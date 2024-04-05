@@ -16,9 +16,8 @@ const Sidebar: React.FC<SidebarProps> = () => {
 
   const handleSearch = () => {
     if (search.trim() === "") return;
-    const conversation = conversations.find(
-      (conversation) =>
-        conversation.fullName.toLowerCase().includes(search.toLowerCase())
+    const conversation = conversations.find((conversation) =>
+      conversation.fullName.toLowerCase().includes(search.toLowerCase())
     );
     if (conversation) {
       setSelectedConversation(conversation);

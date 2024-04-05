@@ -1,7 +1,7 @@
 import React from "react";
-import User from "../../components/user";
 import useGetConversations from "../../hooks/use-get-conversation";
 import useConversation from "../../store/use-conversation";
+import Conversation from "../../components/conversation";
 
 interface ConversationsProps {}
 
@@ -14,20 +14,13 @@ const Conversations: React.FC<ConversationsProps> = () => {
       {loading && <span className="loading loading-spinner w-4 h-4" />}
 
       {conversations.map((conversation) => (
-        <button
-          disabled={loading}
-          className={`btn ${
-            selectedConversation?._id === conversation._id
-              ? "btn-outline btn-primary"
-              : "btn-ghost"
-          } w-full h-14 justify-start`}
-          onClick={() => setSelectedConversation(conversation)}
-        >
-          <User
-            fullName={conversation.fullName}
-            profilePicture={conversation.profilePicture}
-          />
-        </button>
+        <Conversation
+          key={conversation._id}
+          loading={loading}
+          conversation={conversation}
+          selectedConversation={selectedConversation}
+          setSelectedConversation={setSelectedConversation}
+        />
       ))}
     </div>
   );

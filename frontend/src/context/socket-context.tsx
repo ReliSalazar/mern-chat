@@ -1,6 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import io, { Socket } from "socket.io-client";
+import { useAuthContext } from "./auth-context";
 
-export const SocketContext = createContext(null);
+interface SocketContextType {
+  socket: Socket | null;
+  onlineUsers: string[];
+}
+
+export const SocketContext = createContext<SocketContextType>({
+  socket: null,
+  onlineUsers: [],
+});
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useSocketContext = () => {
@@ -12,12 +22,38 @@ export const SocketContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [socket, setSocket] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
+  const { authUser } = useAuthContext();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (authUser) {
+      const newSocket = io("http://localhost:5000", {
+        query: {
+          userId: authUser._id,
+        },
+      });
+      setSocket(newSocket);
+
+      newSocket.on("get-online-users", (users: string[]) => {
+        setOnlineUsers(users);
+      });
+
+      return () => {
+        newSocket.close();
+      };
+    } else {
+      if (socket) {
+        socket.close();
+        setSocket(null);
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authUser]);
 
   return (
-    <SocketContext.Provider value={null}>{children}</SocketContext.Provider>
+    <SocketContext.Provider value={{ socket, onlineUsers }}>
+      {children}
+    </SocketContext.Provider>
   );
 };
