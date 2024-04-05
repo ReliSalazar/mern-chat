@@ -6,7 +6,7 @@
   "scripts": {
     "server": "nodemon backend/server.js",
     "start": "node backend/server.js",
-    "build": "pnpm install && pnpm install --prefix frontend && pnpm run build --prefix frontend"
+    "build": "pnpm install && cd frontend && pnpm install && pnpm run build"
   },
   "type": "module",
   "keywords": [],
