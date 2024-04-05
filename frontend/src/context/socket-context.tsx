@@ -28,7 +28,7 @@ export const SocketContextProvider = ({
 
   useEffect(() => {
     if (authUser) {
-      const newSocket = io("http://localhost:5000", {
+      const newSocket = io("https://mern-chat-r54m.onrender.com/login", {
         query: {
           userId: authUser._id,
         },
